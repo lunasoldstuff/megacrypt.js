@@ -2,7 +2,7 @@ module.exports = {
     // set if domain without port is use as host
   domain: true,
     // Set Host
-  host: 'megacryptjs.herokuapp.com',
+  host: 'megacryptapp.herokuapp.com',
     // The port megacrypt.js will be running on
   port: '80',
     // Server Decryption Key (change this if hosted)
