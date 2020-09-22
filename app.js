@@ -10,6 +10,7 @@ const Tracing = require("@sentry/tracing");
 const api = require('./routes/api')
 const index = require('./routes/index')
 const download = require('./routes/download')
+const sentry = require('./routes/sentry')
 
 const app = express()
 
@@ -41,6 +42,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/', index)
 app.use('/api', api)
 app.use('/dl', download)
+app.use('/debug', sentry)
 
 // catch 404 and forward to error handler
 app.use(function rootHandler(req, res, next) {
