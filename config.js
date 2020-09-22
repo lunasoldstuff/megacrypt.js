@@ -1,8 +1,8 @@
 module.exports = {
     // set if domain without port is use as host
-  domain: true,
+  domain: process.env.USE_DOMAIN || false,
     // Set Host
-  host: 'megacryptapp.herokuapp.com',
+  host: process.env.URL || '127.0.0.1',
     // The port megacrypt.js will be running on
   port: process.env.PORT || 3000,
     // Server Decryption Key (change this if hosted)
