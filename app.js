@@ -49,7 +49,21 @@ app.use(function rootHandler(req, res, next) {
   next(err)
 })
 
-app.use(Sentry.Handlers.errorHandler());
+app.get("/debug-sentry", function mainHandler(req, res) {
+  throw new Error("My first Sentry error!");
+});
+
+app.use(
+  Sentry.Handlers.errorHandler({
+    shouldHandleError(error) {
+      // Capture all 404 and 500 errors
+      if (error.status === 404 || error.status === 500) {
+        return true;
+      }
+      return false;
+    },
+  })
+);
 
 // error handler
 app.use(function onError(err, req, res, next) {
