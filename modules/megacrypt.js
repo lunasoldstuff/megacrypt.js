@@ -26,6 +26,21 @@ class Megacrypt {
           response.size = bytes(file.size)
           callback([response])
         })
+      } else if (/\/\/mega\.nz\/files\/[\d\w]+#[\d\w-]+/.test(url)) {
+        let response = {}
+        let [, fileId, fileKey] = url.split('#')
+        let cryptKey = crypto.randomBytes(32).toString('base64')
+        let crypt = CryptoJS.AES.encrypt(`${fileId}#${fileKey}`, cryptKey).toString()
+        let link = this.encryptServer(`${crypt}#${cryptKey}`)
+        response.link = `http://${host}/dl/_/${base64url.escape(link)}`
+
+        let file = new mega.File({downloadId: fileId, key: fileKey, directory: false})
+        file.loadAttributes((err, file) => {
+          if (err) throw err
+          response.name = file.name
+          response.size = bytes(file.size)
+          callback([response])
+        })
       } else if (/\/\/mega\.nz\/#F![\d\w]+![\d\w-]+/.test(url)) {
         let [, downloadId, fileKey] = url.split('!')
         let folder = new mega.File({downloadId: downloadId, key: fileKey, directory: true})
