@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 /* GET home page. */
-router.get('/sentry-debug', function (req, res, next) {
+router.get('/dothething', function (req, res, next) {
   res.statusCode = 500;
   res.end(res.sentry + "\n");
 })
